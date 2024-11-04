@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+int factorial(int n) {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+int main() {
+    int a = 5;
+    int b = 10;
+    int result = 0;
+    char grade = 'A';
+
+    if (a > b) {
+        result = a + b;
+    } else if (a == b) {
+        result = a * b;
+    } else {
+        result = b - a;
+    }
+
+    printf("The result is: %d\n", result);
+
+    int i = 0;
+    while (i < 5) {
+        result += i;
+        i++;
+    }
+
+    printf("Factorial of %d is %d\n", a, factorial(a));
+
+    if (grade == 'A' || grade == 'B') {
+        printf("Excellent!\n");
+    } else {
+        printf("Keep trying.\n");
+    }
+
+    return 0;
+}

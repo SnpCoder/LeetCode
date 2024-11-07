@@ -1,0 +1,38 @@
+// 标识符测试
+int validIdentifier;
+int 10abc;     // 错误标识符
+int abc$;      // 错误标识符
+int abc;       // 合法标识符
+
+// 整型测试
+int integerTest1 = 123;
+int integerTest2 = -123;
+int integerTest3 = 0;
+int integerTest4 = -0;
+
+// 浮点型测试
+float floatTest1 = 12.34;
+float floatTest2 = 12a.34;  // 错误的浮点数
+
+// 字符测试
+char charTest1 = 'a';
+char charTest2 = 'abc';     // 错误的字符常量
+
+// 运算符测试
+int invalidOperator = @;    // 错误的运算符
+
+// 字符串测试
+char* str1 = "abcd";
+char* str2 = "abc;          // 错误的字符串，缺少闭合引号
+
+// 单字符多义处理
+int* ptr = &integerTest1;   // 指针声明，测试 *
+int multiplication = 3 * 4; // 乘法运算，测试 *
+
+// 注释测试
+int commentTest1 = 1;       // 单行注释测试
+/*
+    多行注释测试
+*/
+int commentTest2 = 2;       // 测试与注释混合
+int invalidTest = /**/;     // 多行注释中的空注释

@@ -1,1 +1,4 @@
-int integerTest1 = -123;
+/*
+    Multi-line comment test
+*/
+int commentTest2 = 2;       // Mixed test with comments

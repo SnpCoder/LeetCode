@@ -1,38 +1,39 @@
-// 标识符测试
+// Identifier test
 int validIdentifier;
-int 10abc;     // 错误标识符
-int abc$;      // 错误标识符
-int abc;       // 合法标识符
+int 10abc;     // Invalid identifier
+int abc$;      // Invalid identifier
+int abc;       // Valid identifier
 
-// 整型测试
+// Integer test
 int integerTest1 = 123;
 int integerTest2 = -123;
 int integerTest3 = 0;
 int integerTest4 = -0;
 
-// 浮点型测试
+// Floating-point test
 float floatTest1 = 12.34;
-float floatTest2 = 12a.34;  // 错误的浮点数
+float floatTest2 = 12a.34;  // Invalid floating-point number
 
-// 字符测试
+// Character test
 char charTest1 = 'a';
-char charTest2 = 'abc';     // 错误的字符常量
+char charTest2 = 'abc';     // Invalid character constant
 
-// 运算符测试
-int invalidOperator = @;    // 错误的运算符
+// Operator test
+int invalidOperator = @;    // Invalid operator
 
-// 字符串测试
+// String test
 char* str1 = "abcd";
-char* str2 = "abc;          // 错误的字符串，缺少闭合引号
+char* str2 = "abc;          // Invalid string, missing closing quote
 
-// 单字符多义处理
-int* ptr = &integerTest1;   // 指针声明，测试 *
-int multiplication = 3 * 4; // 乘法运算，测试 *
+// Single-character multiple meanings
+int* ptr;   // Pointer declaration, testing *
+int multiplication = 3 * 4; // Multiplication operation, testing *
 
-// 注释测试
-int commentTest1 = 1;       // 单行注释测试
+// Comment test
+int commentTest1 = 1;       // Single line comment test
 /*
-    多行注释测试
+    Multi-line comment test
 */
-int commentTest2 = 2;       // 测试与注释混合
-int invalidTest = /**/;     // 多行注释中的空注释
+int commentTest2 = 2;       // Mixed test with comments
+
+

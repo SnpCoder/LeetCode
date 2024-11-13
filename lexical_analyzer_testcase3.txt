@@ -1,4 +1,4 @@
-/*
-    Multi-line comment test
-*/
-int commentTest2 = 2;       // Mixed test with comments
+int validIdentifier;
+int 10abc;
+int abc$;
+int abc; 

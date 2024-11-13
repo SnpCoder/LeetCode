@@ -161,8 +161,9 @@ def ungetc():
 
 def read_source_file(file):
     global input_str
-    with open(file, "r") as f:
-        input_str = f.readlines()
+    f = open(file, "r")
+    input_str = f.readlines()
+    f.close()
 
 
 def lexical_error(msg, line=None, row=None):
@@ -170,35 +171,20 @@ def lexical_error(msg, line=None, row=None):
         line = current_line + 1
     if row is None:
         row = current_row + 1
-    print(f"{line}:{row} Lexical error: {msg}")
+    print(str(line) + ":" + str(row) + " Lexical error: " + msg)
 
 
 def scanner():
     current_char = getchar()
-
-    # 文件结束标记
     if current_char == "SCANEOF":
         return ("SCANEOF", "", "")
-
-    # 跳过空白字符
     if current_char.strip() == "":
         return
-
-    # 处理数字
     if current_char.isdigit():
         int_value = 0
         while current_char.isdigit():
             int_value = int_value * 10 + int(current_char)
             current_char = getchar()
-
-        # 检查是否有非法标识符，例如“10abc”
-        if current_char.isalpha() or current_char == "_":
-            lexical_error("非法标识符：标识符不能以数字开头")
-            while (
-                current_char.isalpha() or current_char.isdigit() or current_char == "_"
-            ):
-                current_char = getchar()
-            return None
 
         if current_char.isalpha() or current_char == "_":
             # 发现以数字开头，后面跟着字母或下划线，这是非法标识符
@@ -227,7 +213,6 @@ def scanner():
             ungetc()
             return ("INT", int_value, get_cate_id("INT10"))
 
-        # 处理浮点数
         float_value = str(int_value) + "."
         current_char = getchar()
         while current_char.isdigit():
@@ -235,42 +220,24 @@ def scanner():
             current_char = getchar()
         ungetc()
         return ("FLOAT", float_value, get_cate_id("FLOAT"))
-
-    # 处理标识符和关键字
     if current_char.isalpha() or current_char == "_":
         string = ""
         while current_char.isalpha() or current_char.isdigit() or current_char == "_":
             string += current_char
             current_char = getchar()
+            if current_char == "SCANEOF":
+                break
 
-        # 检测非法字符，例如“abc$”
-        if not (
-            current_char.isalpha()
-            or current_char.isdigit()
-            or current_char == "_"
-            or current_char == "SCANEOF"
-        ):
-            lexical_error(f"非法标识符：包含非法字符 '{current_char}'")
-            # 跳过非法字符，避免干扰后续扫描
-            while (
-                current_char.isalpha()
-                or current_char.isdigit()
-                or current_char == "_"
-                or not current_char.strip()
-            ):
-                current_char = getchar()
-            return None
-
-        # 检查是否为关键字
         ungetc()
         if is_keyword(string):
             return (string, "", get_cate_id(string))
         else:
             return ("ID", string, get_cate_id("ID"))
 
-    # 处理字符串字面量
     if current_char == '"':
         str_literal = ""
+        global current_line
+        global current_row
         line = current_line + 1
         row = current_row + 1
 
@@ -280,6 +247,7 @@ def scanner():
             current_char = getchar()
             if current_char == "SCANEOF":
                 lexical_error('missing terminating "', line, row)
+
                 current_line = line
                 current_row = row
                 return ("SCANEOF", "", "")
@@ -320,27 +288,26 @@ def scanner():
 
     if current_char == "/":
         next_char = getchar()
-        line = current_line + 1
-        row = current_row + 1
+        line = int(current_line) + 1
+        row = int(current_row) + 1
         if next_char == "*":
-            # 处理多行注释 /* ... */
             comment = ""
             next_char = getchar()
             while True:
                 if next_char == "SCANEOF":
-                    lexical_error("unterminated /* comment", line, row)
+                    lexical_error("unteminated /* comment", line, row)
                     return ("SCANEOF", "", "")
                 if next_char == "*":
                     end_char = getchar()
                     if end_char == "/":
-                        return None  # 忽略注释内容
+                        # Comment, return None to ignore it.
+                        return None
                     if end_char == "SCANEOF":
-                        lexical_error("unterminated /* comment", line, row)
+                        lexical_error("unteminated /* comment", line, row)
                         return ("SCANEOF", "", "")
                 comment += next_char
                 next_char = getchar()
         else:
-            # 处理单字符操作符 "/"
             ungetc()
             op = current_char
             current_char = getchar()
@@ -358,11 +325,9 @@ def scanner():
                 ungetc()
             return ("OP", op, get_cate_id(op))
 
-    # 处理分隔符
     if is_separator(current_char):
         return ("SEP", current_char, get_cate_id(current_char))
 
-    # 处理操作符
     if is_operator(current_char):
         op = current_char
         current_char = getchar()
@@ -371,15 +336,13 @@ def scanner():
         else:
             ungetc()
         return ("OP", op, get_cate_id(op))
-
-    # 处理未知字符
-    lexical_error(f"unknown character: {current_char}")
-    return None
+    else:
+        lexical_error("unknown character: " + current_char)
 
 
 def main():
     # file_name = sys.argv[1]
-    file_name = "lexical_analyzer_testcase3.txt"
+    file_name = "lexical_analyzer_testcase2.txt"
     read_source_file(file_name)
 
     # 打开 out.txt 文件，并将标准输出重定向到该文件

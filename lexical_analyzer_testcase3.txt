@@ -1,1 +1,4 @@
-int integerTest1 = -123;
+int validIdentifier;
+int 10abc;
+int abc$;
+int abc;

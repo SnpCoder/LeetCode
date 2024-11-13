@@ -1,0 +1,5 @@
+1:4 Lexical error: 非法标识符：包含非法字符 ' '
+2:4 Lexical error: 非法标识符：包含非法字符 ' '
+3:4 Lexical error: 非法标识符：包含非法字符 ' '
+('SEP', ';', 307)
+4:4 Lexical error: 非法标识符：包含非法字符 ' '

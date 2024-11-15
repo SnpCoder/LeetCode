@@ -342,7 +342,7 @@ def scanner():
 
 def main():
     # file_name = sys.argv[1]
-    file_name = "lexical_analyzer_testcase2.txt"
+    file_name = "lexical_analyzer_testcase1.txt"
     read_source_file(file_name)
 
     # 打开 out.txt 文件，并将标准输出重定向到该文件

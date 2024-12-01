@@ -1,4 +1,0 @@
-int validIdentifier;
-int 10abc;
-int abc$;
-int abc; 
